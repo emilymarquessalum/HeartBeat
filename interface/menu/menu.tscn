@@ -155,8 +155,8 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[connection signal="pressed" from="return_to_menu" to="." method="_on_return_to_menu_pressed"]
 [connection signal="pressed" from="return_to_menu" to="general_options" method="_save_settings"]
+[connection signal="pressed" from="return_to_menu" to="." method="_on_return_to_menu_pressed"]
 [connection signal="pressed" from="continue_game" to="." method="_on_continue_game_pressed"]
 [connection signal="pressed" from="new_game" to="." method="_on_new_game_pressed"]
 [connection signal="pressed" from="options" to="." method="_on_options_pressed"]
