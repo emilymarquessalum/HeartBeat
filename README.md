@@ -3,11 +3,9 @@
 Made in Godot!
 
 
-<img src= "md_res/menu.png" alt = Menu" width="49%"> 
+<img src= "md_res/menu.png" alt = "Menu" width="40%"> <img src= "md_res/game_start.png" alt = "Game Start" width="45%"> 
 
-<img src= "md_res/game_start.png" alt = "Game Start" width="49%"> 
-
-<img src= "md_res/black_heart.png" alt = "Black Heart" width="98%"> 
+<img src= "md_res/black_heart.png" alt = "Black Heart" width="60%"> 
 
 [Github of the Artist!]()
 
