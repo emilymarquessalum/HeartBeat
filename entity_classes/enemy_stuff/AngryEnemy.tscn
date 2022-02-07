@@ -1,0 +1,88 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://entity_classes/enemy_stuff/snail.tscn" type="PackedScene" id=1]
+[ext_resource path="res://entity_classes/enemy_stuff/behaviour/state.gd" type="Script" id=2]
+[ext_resource path="res://entity_classes/enemy_stuff/test_player_vision.gd" type="Script" id=3]
+[ext_resource path="res://entity_classes/enemy_stuff/behaviour/move_to_player.gd" type="Script" id=4]
+[ext_resource path="res://resources/enemy_1_dormindo.png" type="Texture" id=5]
+[ext_resource path="res://resources/enemy_1_acordado.png" type="Texture" id=6]
+[ext_resource path="res://entity_classes/enemy_stuff/vision_cast.gd" type="Script" id=8]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 16.5895
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ ExtResource( 6 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 5 ) ],
+"loop": false,
+"name": "anger_up",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 6 ) ],
+"loop": true,
+"name": "following",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 5 ) ],
+"loop": true,
+"name": "moving",
+"speed": 5.0
+} ]
+
+[sub_resource type="CircleShape2D" id=3]
+radius = 140.0
+
+[node name="Enemy" instance=ExtResource( 1 )]
+scale = Vector2( 2, 2 )
+speed = 120
+
+[node name="CollisionShape2D" parent="." index="0"]
+position = Vector2( 0.501876, 1.82085 )
+shape = SubResource( 1 )
+
+[node name="Anim" parent="." index="1"]
+scale = Vector2( -0.1, 0.1 )
+frames = SubResource( 2 )
+animation = "following"
+
+[node name="test_player_vision" type="Node" parent="behaviours" index="0"]
+script = ExtResource( 3 )
+
+[node name="move" parent="behaviours" index="1"]
+speed_boost = 0.4
+
+[node name="move_to_player" type="Node" parent="behaviours" index="2"]
+script = ExtResource( 4 )
+
+[node name="follow_player" type="Node" parent="states" index="0"]
+script = ExtResource( 2 )
+used_behaviours = [ "move_to_player", "test_player_vision" ]
+state_name = "follow_player"
+
+[node name="normal" parent="states" index="1"]
+used_behaviours = [ "move", "test_player_vision" ]
+state_name = "normal"
+
+[node name="front_ground_detector" parent="." index="4"]
+collision_mask = 7
+
+[node name="vision_cast" type="RayCast2D" parent="." index="7"]
+position = Vector2( -6.72717, 2.73291 )
+enabled = true
+cast_to = Vector2( 0, 0 )
+collision_mask = 6
+collide_with_areas = true
+script = ExtResource( 8 )
+
+[node name="visible_area" type="Area2D" parent="." index="8"]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="visible_area" index="0"]
+shape = SubResource( 3 )
+
+[node name="behind_detector" parent="." index="9"]
+position = Vector2( 12.0149, 9.65957 )
+cast_to = Vector2( 40, 0 )
+
+[node name="top" parent="." index="11"]
+position = Vector2( -0.21936, -14.2037 )

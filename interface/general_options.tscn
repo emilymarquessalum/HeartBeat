@@ -1,0 +1,107 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://font_stuff/ModernDOS8x8.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://interface/general_options.gd" type="Script" id=2]
+[ext_resource path="res://resources/vida - Copia.png" type="Texture" id=3]
+[ext_resource path="res://interface/language_options.gd" type="Script" id=4]
+[ext_resource path="res://interface/menu/new_dynamicfont.tres" type="DynamicFont" id=5]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.12549, 0.109804, 0.109804, 1 )
+border_width_left = 3
+border_width_bottom = 15
+border_color = Color( 0.12549, 0.109804, 0.109804, 1 )
+border_blend = true
+corner_detail = 1
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 1, 0.129412, 0.129412, 1 )
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 1, 0.054902, 0.054902, 1 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 73
+outline_size = 3
+outline_color = Color( 0.231373, 0.12549, 0.12549, 1 )
+font_data = ExtResource( 1 )
+
+[sub_resource type="StyleBoxFlat" id=5]
+bg_color = Color( 1, 0.0784314, 0.0784314, 1 )
+
+[sub_resource type="StyleBoxFlat" id=6]
+bg_color = Color( 0.858824, 0.207843, 0.207843, 1 )
+
+[sub_resource type="StyleBoxFlat" id=7]
+bg_color = Color( 0.784314, 0.188235, 0.188235, 1 )
+
+[sub_resource type="StyleBoxFlat" id=8]
+bg_color = Color( 0.772549, 0.129412, 0.0980392, 1 )
+
+[node name="general_options" type="Control"]
+margin_right = 40.0
+margin_bottom = 40.0
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="volume" type="HSlider" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -150.0
+margin_top = -50.0
+margin_right = 150.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 300, 100 )
+size_flags_horizontal = 3
+custom_icons/grabber_highlight = ExtResource( 3 )
+custom_icons/grabber = ExtResource( 3 )
+custom_styles/slider = SubResource( 1 )
+custom_styles/grabber_area_highlight = SubResource( 2 )
+custom_styles/grabber_area = SubResource( 3 )
+step = 0.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="volume_label" type="Label" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -111.0
+margin_top = -62.9975
+margin_right = 111.0
+margin_bottom = -25.9975
+custom_fonts/font = SubResource( 4 )
+custom_colors/font_color = Color( 1, 0.121569, 0.121569, 1 )
+text = "VOLUME"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="language_option" type="OptionButton" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -141.425
+margin_top = 21.2037
+margin_right = 145.677
+margin_bottom = 48.2037
+custom_styles/hover = SubResource( 5 )
+custom_styles/pressed = SubResource( 6 )
+custom_styles/focus = SubResource( 7 )
+custom_styles/normal = SubResource( 8 )
+custom_fonts/font = ExtResource( 5 )
+text = "portugues "
+align = 1
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="item_selected" from="language_option" to="language_option" method="_on_language_option_item_selected"]

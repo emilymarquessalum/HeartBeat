@@ -1,0 +1,73 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://entity_classes/enemy_stuff/new_spriteframes.tres" type="SpriteFrames" id=1]
+[ext_resource path="res://entity_classes/enemy_stuff/enemy.gd" type="Script" id=2]
+[ext_resource path="res://entity_classes/enemy_stuff/behaviour/state.gd" type="Script" id=3]
+[ext_resource path="res://entity_classes/enemy_stuff/behaviour/move.gd" type="Script" id=4]
+[ext_resource path="res://entity_classes/Health.gd" type="Script" id=5]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 15.647, 13.1989 )
+
+[node name="KinematicBody2D" type="KinematicBody2D" groups=[
+"Enemy",
+]]
+scale = Vector2( 1.5, 1.5 )
+collision_layer = 2
+collision_mask = 4
+script = ExtResource( 2 )
+speed = 70
+starting_state = "normal"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( -0.261271, 3.67018 )
+shape = SubResource( 1 )
+
+[node name="Anim" type="AnimatedSprite" parent="."]
+position = Vector2( 0, 3.0052 )
+scale = Vector2( 0.1, 0.1 )
+frames = ExtResource( 1 )
+playing = true
+
+[node name="behaviours" type="Node" parent="."]
+
+[node name="move" type="Node" parent="behaviours"]
+script = ExtResource( 4 )
+
+[node name="states" type="Node" parent="."]
+
+[node name="normal" type="Node" parent="states"]
+script = ExtResource( 3 )
+used_behaviours = [ "move" ]
+
+[node name="front_ground_detector" type="RayCast2D" parent="."]
+position = Vector2( -10.7308, -0.0372155 )
+enabled = true
+cast_to = Vector2( 0, 25 )
+collision_mask = 4
+
+[node name="direction_collision" type="RayCast2D" parent="."]
+position = Vector2( -13.7283, -5.21836 )
+enabled = true
+cast_to = Vector2( -16, 0 )
+collision_mask = 4
+
+[node name="low_direction_collision" type="RayCast2D" parent="."]
+position = Vector2( -12.2754, 6.01873 )
+enabled = true
+cast_to = Vector2( -16, 0 )
+collision_mask = 4
+
+[node name="behind_detector" type="RayCast2D" parent="."]
+position = Vector2( 4.07055, -0.875603 )
+enabled = true
+cast_to = Vector2( 24, 0 )
+collision_mask = 4
+collide_with_areas = true
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource( 5 )
+max_health = 1
+
+[node name="top" type="Node2D" parent="."]
+position = Vector2( -0.593933, -11.5817 )

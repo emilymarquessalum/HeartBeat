@@ -1,0 +1,104 @@
+[gd_scene load_steps=16 format=2]
+
+[ext_resource path="res://entity_classes/Health.gd" type="Script" id=1]
+[ext_resource path="res://entity_classes/player/behaviour/move.gd" type="Script" id=2]
+[ext_resource path="res://entity_classes/player/behaviour/beat.gd" type="Script" id=3]
+[ext_resource path="res://entity_classes/player/player.gd" type="Script" id=4]
+[ext_resource path="res://entity_classes/enemy_stuff/behaviour/state.gd" type="Script" id=5]
+[ext_resource path="res://entity_classes/player/behaviour/jump.gd" type="Script" id=6]
+[ext_resource path="res://entity_classes/player/behaviour/spike_damage.gd" type="Script" id=7]
+[ext_resource path="res://entity_classes/player/InvulnerableTimer.gd" type="Script" id=8]
+[ext_resource path="res://entity_classes/player/Sprite.gd" type="Script" id=9]
+[ext_resource path="res://entity_classes/player/new_spriteframes.tres" type="SpriteFrames" id=10]
+[ext_resource path="res://entity_classes/player/behaviour/get_smaller.gd" type="Script" id=11]
+[ext_resource path="res://sounds/beatsound.wav" type="AudioStream" id=12]
+[ext_resource path="res://sounds/tomar_dano.wav" type="AudioStream" id=13]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 9.381, 10 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 10, 13.0617 )
+
+[node name="KinematicBody2D" type="KinematicBody2D"]
+scale = Vector2( 2, 2 )
+script = ExtResource( 4 )
+die = false
+starting_state = "normal"
+time_to_end = 30.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 6.632, 5 )
+shape = SubResource( 1 )
+
+[node name="Anim" type="AnimatedSprite" parent="CollisionShape2D"]
+position = Vector2( -1.01168, -4.3889 )
+rotation = 3.14159
+scale = Vector2( 0.05, -0.05 )
+frames = ExtResource( 10 )
+animation = "walking"
+script = ExtResource( 9 )
+
+[node name="tiles_area" type="Area2D" parent="CollisionShape2D"]
+visible = false
+position = Vector2( -6.74312, -4.62036 )
+scale = Vector2( 0.983291, 1.1406 )
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionShape2D/tiles_area"]
+position = Vector2( 7.2839, 4.45953 )
+shape = SubResource( 2 )
+
+[node name="area" type="Area2D" parent="."]
+scale = Vector2( 0.983291, 1.1406 )
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="area"]
+position = Vector2( 7.2839, 4.45953 )
+shape = SubResource( 2 )
+
+[node name="states" type="Node" parent="."]
+
+[node name="normal" type="Node" parent="states"]
+script = ExtResource( 5 )
+used_behaviours = [ "move", "jump", "beat", "spike_damage" ]
+state_name = "normal"
+
+[node name="cutscene_mode" type="Node" parent="states"]
+script = ExtResource( 5 )
+state_name = "cutscene-mode"
+
+[node name="behaviours" type="Node" parent="."]
+script = ExtResource( 1 )
+
+[node name="move" type="Node" parent="behaviours"]
+script = ExtResource( 2 )
+
+[node name="jump" type="Node" parent="behaviours"]
+script = ExtResource( 6 )
+
+[node name="spike_damage" type="Node" parent="behaviours"]
+script = ExtResource( 7 )
+
+[node name="beat" type="Node" parent="behaviours"]
+script = ExtResource( 3 )
+clicks_to_explode = 3
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource( 1 )
+
+[node name="InvulnerableTimer" type="Timer" parent="."]
+script = ExtResource( 8 )
+
+[node name="on_update" type="Node2D" parent="."]
+
+[node name="get_smaller" type="Node2D" parent="on_update"]
+script = ExtResource( 11 )
+
+[node name="beat_sound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 12 )
+
+[node name="damage_sound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 13 )
+
+[connection signal="timeout" from="InvulnerableTimer" to="InvulnerableTimer" method="_on_InvulnerableTimer_timeout"]
